@@ -66,7 +66,7 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <form id="complaintForm">
                 <label for="title">Title:</label>
                 <input type="text" name="title" id="title" required>
-
+                <br>
                 <label for="complaint_type">Complaint Type:</label>
                 <select name="complaint_type" id="complaint_type" required>
                     <option value="Maintenance">Maintenance</option>
@@ -75,10 +75,10 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <option value="Roommate Issues">Roommate Issues</option>
                     <option value="Other">Other</option>
                 </select>
-
+                <br>
                 <label for="body">Details:</label>
                 <textarea name="body" id="body" rows="4" required></textarea>
-
+                <br>
                 <button type="button" onclick="submitComplaint()">Submit Complaint</button>
             </form>
         </div>
