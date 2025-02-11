@@ -1,4 +1,7 @@
 <?php
+// Start a session
+session_start();
+
 // Include the database configuration
 require_once '../config/db.php'; 
 
@@ -13,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die('Email and password are required.');
     }
 
-    // Ensure $pdo (Database Connection) is correctly loaded
+    // Ensure $db (Database Connection) is correctly loaded
     if (!isset($db)) {
         die('Database connection not found. Check db.php.');
     }
@@ -29,9 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Verify password
     if ($user && password_verify($password, $user['password'])) {
+        // Store student ID in session
+        $_SESSION['student_id'] = $user['id'];
+        $_SESSION['student_name'] = $user['name']; // Optional: Store name for display
+
         echo "Login successful!";
-        // Redirect to dashboard
-        header("Location: ../dashboard.php");
+        
+        // Redirect to home or dashboard
+        header("Location: ../complaints.php");
         exit;
     } else {
         echo "Invalid email or password.";
