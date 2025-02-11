@@ -62,10 +62,8 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             <label for="body">Details:</label>
             <textarea name="body" id="body" rows="4" placeholder="Describe your complaint in detail..." required></textarea>
-
-            <div class="modal-footer">
-                <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
-                <button type="button" class="submit-btn" onclick="submitComplaint()">Submit</button>
+            <div class="modal-footer" style="text-align: center;">
+                <button type="button" class="submit-btn" style="font-size: 1.2em; padding: 10px 20px;" onclick="submitComplaint()">Submit</button>
             </div>
         </form>
     </div>
