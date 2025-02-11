@@ -45,7 +45,7 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
     function submitComplaint() {
         let formData = new FormData(document.getElementById("complaintForm"));
 
-        fetch("add_complaint_logic.php", {  // Call the logic file
+        fetch("../controllers/add_complaint_logic.php", {  // Call the logic file
             method: "POST",
             body: formData
         })
