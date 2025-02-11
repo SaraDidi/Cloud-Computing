@@ -31,25 +31,8 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/styles.css">
     <title>My Complaints</title>
-    <style>
-        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
-        th { background-color: #f4f4f4; }
-        .pending { color: orange; font-weight: bold; }
-        .resolved { color: green; font-weight: bold; }
-        .rejected { color: red; font-weight: bold; }
-        .btn-container { text-align: center; margin: 20px; }
-        .btn-add { padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px; }
-        .btn-add:hover { background-color: #0056b3; }
-        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); }
-        .modal-content { background-color: white; margin: 15% auto; padding: 20px; border: 1px solid #ccc; width: 40%; text-align: left; border-radius: 8px; }
-        .close { float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
-        .close:hover { color: red; }
-        input, select, textarea { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
-        button { padding: 10px 15px; font-size: 16px; background-color: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; }
-        button:hover { background-color: #218838; }
-    </style>
 </head>
 <body>
 <div style="display: flex; justify-content: space-between; align-items: center; margin: 20px;">
@@ -58,31 +41,36 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <button class="btn-add" onclick="openModal()">Add New Complaint</button>
 </div>
 
-    <!-- Modal for Adding Complaints -->
-    <div id="complaintModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h3>Submit a Complaint</h3>
-            <form id="complaintForm">
-                <label for="title">Title:</label>
-                <input type="text" name="title" id="title" required>
-                <br>
-                <label for="complaint_type">Complaint Type:</label>
-                <select name="complaint_type" id="complaint_type" required>
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Noise">Noise</option>
-                    <option value="Cleanliness">Cleanliness</option>
-                    <option value="Roommate Issues">Roommate Issues</option>
-                    <option value="Other">Other</option>
-                </select>
-                <br>
-                <label for="body">Details:</label>
-                <textarea name="body" id="body" rows="4" required></textarea>
-                <br>
-                <button type="button" onclick="submitComplaint()">Submit Complaint</button>
-            </form>
-        </div>
+<!-- Modal for Adding Complaints -->
+<div id="complaintModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Submit a Complaint</h2>
+        <form id="complaintForm">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" placeholder="Enter a short title" required>
+
+            <label for="complaint_type">Complaint Type:</label>
+            <select name="complaint_type" id="complaint_type" required>
+                <option value="" disabled selected>Select Complaint Type</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Noise">Noise</option>
+                <option value="Cleanliness">Cleanliness</option>
+                <option value="Roommate Issues">Roommate Issues</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <label for="body">Details:</label>
+            <textarea name="body" id="body" rows="4" placeholder="Describe your complaint in detail..." required></textarea>
+
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+                <button type="button" class="submit-btn" onclick="submitComplaint()">Submit</button>
+            </div>
+        </form>
     </div>
+</div>
+
 
     <table>
         <thead>
