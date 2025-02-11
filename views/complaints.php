@@ -1,3 +1,5 @@
+
+<?php include '../includes/header.php'; ?>
 <?php
 // Start session
 session_start();
@@ -62,18 +64,19 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <span class="close" onclick="closeModal()">&times;</span>
             <h3>Submit a Complaint</h3>
             <form id="complaintForm">
-                <label>Title:</label>
+                <label for="title">Title:</label>
                 <input type="text" name="title" id="title" required>
 
-                <label>Complaint Type:</label>
+                <label for="complaint_type">Complaint Type:</label>
                 <select name="complaint_type" id="complaint_type" required>
-                    <option value="Academic">Academic</option>
-                    <option value="Administrative">Administrative</option>
-                    <option value="Facilities">Facilities</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Noise">Noise</option>
+                    <option value="Cleanliness">Cleanliness</option>
+                    <option value="Roommate Issues">Roommate Issues</option>
                     <option value="Other">Other</option>
                 </select>
 
-                <label>Details:</label>
+                <label for="body">Details:</label>
                 <textarea name="body" id="body" rows="4" required></textarea>
 
                 <button type="button" onclick="submitComplaint()">Submit Complaint</button>
@@ -143,3 +146,4 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </body>
 </html>
+<?php include('../includes/footer.php'); ?>
