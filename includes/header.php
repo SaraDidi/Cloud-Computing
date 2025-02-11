@@ -53,7 +53,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 </head>
 <body>
     <div class="sidebar">
-        <a href="../views/home.php" class="<?= $current_page == 'index.php' ? 'active' : '' ?>">Home</a>
+        <a href="../views/home.php" class="<?= $current_page == 'home.php' ? 'active' : '' ?>">Home</a>
         <a href="../views/complaints.php" class="<?= $current_page == 'complaints.php' ? 'active' : '' ?>">Complaints</a>
         <a href="../views/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">Profile</a>
     <script>
