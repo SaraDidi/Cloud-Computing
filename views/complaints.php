@@ -104,33 +104,20 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </table>
 
     <script>
-        function openModal() {
-            document.getElementById("complaintModal").style.display = "block";
-        }
+    function openModal() {
+        document.getElementById("complaintModal").style.display = "flex";
+    }
 
-        function closeModal() {
-            document.getElementById("complaintModal").style.display = "none";
-        }
+    function closeModal() {
+        document.getElementById("complaintModal").style.display = "none";
+    }
 
-        function submitComplaint() {
-            let formData = new FormData(document.getElementById("complaintForm"));
-            formData.append("add_complaint", true);
+    // Ensure the modal is closed on page load
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("complaintModal").style.display = "none";
+    });
+</script>
 
-            fetch("add_complaint_logic.php", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (data.status === "success") {
-                    closeModal();
-                    window.location.reload();
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        }
-    </script>
 
 </body>
 </html>
