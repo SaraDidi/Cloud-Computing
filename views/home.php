@@ -52,7 +52,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-<h2 style="text-align: right; margin-right: 10%;">Room Availability</h2>
+<h2 style="text-align: left; margin-left: 10%;">Room Availability</h2>
 
     <table>
         <thead>
@@ -74,6 +74,14 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td class="<?= $room['availability'] ? 'available' : 'unavailable'; ?>">
                             <?= $room['availability'] ? 'Available' : 'Occupied'; ?>
                         </td>
+                    <td>
+                        <?php if ($room['availability']): ?>
+                            <form action="register.php" method="post">
+                                <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']); ?>">
+                                <button type="submit">Register</button>
+                            </form>
+                        <?php endif; ?>
+                    </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
