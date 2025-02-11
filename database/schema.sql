@@ -14,8 +14,6 @@ CREATE TABLE room (
     floor_number INT NOT NULL,
     block_number INT NOT NULL,
     availability BOOLEAN NOT NULL DEFAULT TRUE,
-    opening_time DATETIME NOT NULL,
-    closing_time DATETIME NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

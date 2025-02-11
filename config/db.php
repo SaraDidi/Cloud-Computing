@@ -7,10 +7,11 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
 $dotenv->load();
 
 // Retrieve database credentials from .env
-$host = getenv('DB_HOST');
-$dbname = getenv('DB_NAME');
-$user = getenv('DB_USER');
-$pass = getenv('DB_PASS');
+
+$host = getenv('DB_HOST') ?: 'localhost';
+$dbname = getenv('DB_NAME') ?: 'cloud_computing';
+$user = getenv('DB_USER') ?: 'root';
+$pass = getenv('DB_PASS') ?: '1234';
 
 // Connect to MySQL using PDO
 try {

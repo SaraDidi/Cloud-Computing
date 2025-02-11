@@ -1,3 +1,7 @@
+
+<?php include '../includes/header.php'; ?>
+
+
 <?php
 // Start session
 session_start();
@@ -119,3 +123,5 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </body>
 </html>
+
+<?php include('../includes/footer.php'); ?>

@@ -1,3 +1,8 @@
+
+<?php include '../includes/header.php'; ?>
+<h1>Welcome to University Housing</h1>
+<p>Manage your housing and complaints efficiently.</p>
+
 <?php
 // Include the database configuration
 require_once '../config/db.php'; 
@@ -8,9 +13,7 @@ if (!isset($db)) {
 }
 
 // Fetch rooms from the database
-$query = "SELECT id, room_number, floor_number, block_number, availability, 
-                 DATE_FORMAT(opening_time, '%Y-%m-%d %H:%i') AS opening_time, 
-                 DATE_FORMAT(closing_time, '%Y-%m-%d %H:%i') AS closing_time
+$query = "SELECT id, room_number, floor_number, block_number, availability
           FROM room ORDER BY floor_number, room_number";
 
 $stmt = $db->prepare($query);
@@ -54,27 +57,24 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <table>
         <thead>
-            <tr>
-                <th>Room Number</th>
-                <th>Floor</th>
+            <tr> 
                 <th>Block</th>
+                <th>Floor</th>
+                <th>Room Number</th>
                 <th>Availability</th>
-                <th>Opening Time</th>
-                <th>Closing Time</th>
             </tr>
         </thead>
         <tbody>
             <?php if (!empty($rooms)): ?>
                 <?php foreach ($rooms as $room): ?>
                     <tr>
-                        <td><?= htmlspecialchars($room['room_number']); ?></td>
-                        <td><?= htmlspecialchars($room['floor_number']); ?></td>
-                        <td><?= htmlspecialchars($room['block_number']); ?></td>
+                         <td><?= htmlspecialchars($room['block_number']); ?></td>
+                         <td><?= htmlspecialchars($room['floor_number']); ?></td>
+                         <td><?= htmlspecialchars($room['room_number']); ?></td>
+                
                         <td class="<?= $room['availability'] ? 'available' : 'unavailable'; ?>">
                             <?= $room['availability'] ? 'Available' : 'Occupied'; ?>
                         </td>
-                        <td><?= htmlspecialchars($room['opening_time']); ?></td>
-                        <td><?= htmlspecialchars($room['closing_time']); ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
@@ -87,3 +87,4 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </body>
 </html>
+<?php include('../includes/footer.php'); ?>

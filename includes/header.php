@@ -60,7 +60,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         function confirmLogout(event) {
             event.preventDefault();
             if (confirm("Are you sure you want to log out?")) {
-                window.location.href = "../logout.php";
+                window.location.href = "../views/logout.php";
             }
         }
     </script>

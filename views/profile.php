@@ -1,3 +1,6 @@
+
+
+<?php include '../includes/header.php'; ?>
 <?php
 // Start session
 session_start();
@@ -115,3 +118,5 @@ $room_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </body>
 </html>
+
+<?php include('../includes/footer.php'); ?>

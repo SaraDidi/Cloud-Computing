@@ -10,7 +10,8 @@
 
       <div style="margin-bottom: 15px;">
             <label for="name" style="display: block; font-weight: bold;">Name <span style="color: red;">*</span></label>
-            <input type="name" name="matricul" id="name" required 
+            
+            <input type="name" name="name" id="name" required 
                 style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;" />
         </div>
         <div style="margin-bottom: 15px;">

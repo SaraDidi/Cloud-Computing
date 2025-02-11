@@ -24,7 +24,7 @@
         Don't have an account? 
         <a href="views/register.php" style="color: #007BFF; text-decoration: none;">Create one</a>.
     </p>
-    <a href="views/complaints.php" style="color: #007BFF; text-decoration: none;">Test</a>.
+    
 </div>
 
 <?php include 'includes/footer.php'; ?>
