@@ -41,6 +41,27 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <button class="btn-add" onclick="openModal()">Add New Complaint</button>
 </div>
 
+<script>
+    function submitComplaint() {
+        let formData = new FormData(document.getElementById("complaintForm"));
+
+        fetch("add_complaint_logic.php", {  // Call the logic file
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.status === "success") {
+                closeModal();
+                window.location.reload(); // Refresh to update the complaints list
+            }
+        })
+        .catch(error => console.error("Error:", error));
+    }
+</script>
+
+
 <!-- Modal for Adding Complaints -->
 <div id="complaintModal" class="modal">
     <div class="modal-content">
