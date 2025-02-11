@@ -52,46 +52,46 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-<h2 style="text-align: left; margin-left: 10%;">Room Availability</h2>
+<h2 style="text-align: left; margin-left: 10%; padding-top: 20px;">Room Availability</h2>
 
-    <table>
-        <thead>
-            <tr> 
-                <th>Block</th>
-                <th>Floor</th>
-                <th>Room Number</th>
-                <th>Availability</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($rooms)): ?>
-                <?php foreach ($rooms as $room): ?>
-                    <tr>
-                         <td><?= htmlspecialchars($room['block_number']); ?></td>
-                         <td><?= htmlspecialchars($room['floor_number']); ?></td>
-                         <td><?= htmlspecialchars($room['room_number']); ?></td>
-                
-                        <td class="<?= $room['availability'] ? 'available' : 'unavailable'; ?>">
-                            <?= $room['availability'] ? 'Available' : 'Occupied'; ?>
-                        </td>
+<table>
+    <thead>
+        <tr> 
+            <th>Block</th>
+            <th>Floor</th>
+            <th>Room Number</th>
+            <th>Availability</th>
+            <th>Register</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($rooms)): ?>
+            <?php foreach ($rooms as $room): ?>
+                <tr>
+                    <td><?= htmlspecialchars($room['block_number']); ?></td>
+                    <td><?= htmlspecialchars($room['floor_number']); ?></td>
+                    <td><?= htmlspecialchars($room['room_number']); ?></td>
+                    <td class="<?= $room['availability'] ? 'available' : 'unavailable'; ?>">
+                        <?= $room['availability'] ? 'Available' : 'Occupied'; ?>
+                    </td>
                     <td>
                         <?php if ($room['availability']): ?>
                             <form action="register.php" method="post">
                                 <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']); ?>">
                                 <button type="submit">Register</button>
                             </form>
+                        <?php else: ?>
+                            <span>Can't be registered</span>
                         <?php endif; ?>
                     </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="6">No rooms found.</td>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-
-</body>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="6">No rooms found.</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
 </html>
 <?php include('../includes/footer.php'); ?>
