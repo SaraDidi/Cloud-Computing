@@ -1,46 +1,117 @@
-<?php include '../includes/header.php'; ?>
-
 <?php
-// Assuming you have a $student variable with the student's details
-$student = [
-    'name' => 'John Doe',
-    'email' => 'john.doe@example.com',
-    'matric' => 'A123456'
-];
+// Start session
+session_start();
+
+// Include database configuration
+require_once '../config/db.php';
+
+// Ensure student is logged in
+if (!isset($_SESSION['student_id'])) {
+    die("You must be logged in to view your profile.");
+}
+
+$student_id = $_SESSION['student_id'];
+
+// Fetch student information
+$query = "SELECT name, matricul, email, created_at FROM students WHERE id = :student_id";
+$stmt = $db->prepare($query);
+$stmt->bindParam(':student_id', $student_id);
+$stmt->execute();
+$student = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$student) {
+    die("Student not found.");
+}
+
+// Fetch room registration history
+$query = "SELECT r.room_number, r.floor_number, r.block_number, rc.registration_time, rc.expiry_time 
+          FROM registration_confirmation rc
+          JOIN room r ON rc.room_id = r.id
+          WHERE rc.student_id = :student_id
+          ORDER BY rc.registration_time DESC";
+
+$stmt = $db->prepare($query);
+$stmt->bindParam(':student_id', $student_id);
+$stmt->execute();
+$room_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="profile">
-    <h2>Student Profile</h2>
-    <div class="student-card" style="border: 1px solid #ccc; padding: 20px; border-radius: 10px; width: 300px; margin-right: auto; text-align: center;">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQDyS_Qs-2z69vZdklHZiwi9SMIJKTeEXc1g&s" alt="Student Image" style="border-radius: 50%; width: 150px; height: 150px; border: 2px solid #3498db; margin-bottom: 20px;">
-        <h3><?php echo htmlspecialchars($student['name']); ?></h3>
-        <p>Email: <?php echo htmlspecialchars($student['email']); ?></p>
-        <p>Matric: <?php echo htmlspecialchars($student['matric']); ?></p>
-    </div>
-</div>
-<div class="booked-rooms">
-    <h3>Booked Rooms</h3>
-    <ul>
-        <?php
-        // Assuming you have a $bookedRooms variable with the list of booked rooms
-        $bookedRooms = [
-            ['number' => '201', 'building' => 'B', 'image' => 'https://www.thespruce.com/thmb/2_Q52GK3rayV1wnqm6vyBvgI3Ew=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/put-together-a-perfect-guest-room-1976987-hero-223e3e8f697e4b13b62ad4fe898d492d.jpg'],
-            ['number' => '201', 'building' => 'B', 'image' => 'https://www.thespruce.com/thmb/2_Q52GK3rayV1wnqm6vyBvgI3Ew=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/put-together-a-perfect-guest-room-1976987-hero-223e3e8f697e4b13b62ad4fe898d492d.jpg'],
-        ];
-
-        echo '<div style="display: flex; flex-wrap: wrap; gap: 10px;">';
-        foreach ($bookedRooms as $room) {
-            echo '<div class="room-card" style="border: 1px solid #ccc; padding: 10px; margin: 10px; width: calc(20% - 20px); text-align: center; border-radius: 10px; overflow: hidden; box-sizing: border-box;">';
-            echo '<img src="' . $room['image'] . '" alt="Room ' . $room['number'] . '" style="width: 100%; height: 150px; object-fit: cover;">';
-            echo '<p>Room Number: ' . $room['number'] . '</p>';
-            echo '<p>Building: ' . $room['building'] . '</p>';
-            echo '<button style="padding: 5px 10px; background-color: #2c3e50; color: white; border: none; cursor: pointer; border-radius: 5px;">Book Now</button>';
-            echo '</div>';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
         }
-        ?>
-    </ul>
-</div>
+        .profile-container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            border-radius: 8px;
+            text-align: left;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
 
+    <h2>Student Profile</h2>
 
+    <div class="profile-container">
+        <p><strong>Name:</strong> <?= htmlspecialchars($student['name']); ?></p>
+        <p><strong>Matricul:</strong> <?= htmlspecialchars($student['matricul']); ?></p>
+        <p><strong>Email:</strong> <?= htmlspecialchars($student['email']); ?></p>
+        <p><strong>Account Created:</strong> <?= htmlspecialchars($student['created_at']); ?></p>
+    </div>
 
-<?php include('../includes/footer.php'); ?>
+    <h2>Room Registration History</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Floor</th>
+                <th>Block</th>
+                <th>Registration Time</th>
+                <th>Expiry Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($room_history)): ?>
+                <?php foreach ($room_history as $room): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($room['room_number']); ?></td>
+                        <td><?= htmlspecialchars($room['floor_number']); ?></td>
+                        <td><?= htmlspecialchars($room['block_number']); ?></td>
+                        <td><?= htmlspecialchars($room['registration_time']); ?></td>
+                        <td><?= htmlspecialchars($room['expiry_time']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="5">No room registrations found.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+
+</body>
+</html>
