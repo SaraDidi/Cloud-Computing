@@ -48,7 +48,6 @@ $room_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
         }
         .profile-container {
             width: 50%;
@@ -85,9 +84,7 @@ $room_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <p><strong>Account Created:</strong> <?= htmlspecialchars($student['created_at']); ?></p>
     </div>
 
-    <h2>Room Registration History</h2>
-
-    <table>
+    <h2 style="padding-top: 20px;">Room Registration History</h2>  <table>
         <thead>
             <tr>
                 <th>Room Number</th>

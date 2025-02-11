@@ -52,8 +52,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-
-    <h2 style="text-align: center;">Room Availability</h2>
+<h2 style="text-align: right; margin-right: 10%;">Room Availability</h2>
 
     <table>
         <thead>

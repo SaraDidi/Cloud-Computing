@@ -80,15 +80,13 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-
-    <h2 style="text-align: center;">My Complaints</h2>
-
+<div style="display: flex; justify-content: space-between; align-items: center; margin: 20px;">
+    <h2>My Complaints</h2>
     <!-- Add Complaint Button -->
-    <div class="btn-container">
-        <a href="add_complaint.php">
-            <button class="btn-add">Add New Complaint</button>
-        </a>
-    </div>
+    <a href="add_complaint.php">
+        <button class="btn-add">Add New Complaint</button>
+    </a>
+</div>
 
     <table>
         <thead>
