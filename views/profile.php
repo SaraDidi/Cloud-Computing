@@ -77,14 +77,18 @@ $room_history = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <h2>Student Profile</h2>
 
-    <div class="profile-container">
+    <div class="profile-container" style="text-align: left;">
         <p><strong>Name:</strong> <?= htmlspecialchars($student['name']); ?></p>
         <p><strong>Matricul:</strong> <?= htmlspecialchars($student['matricul']); ?></p>
         <p><strong>Email:</strong> <?= htmlspecialchars($student['email']); ?></p>
         <p><strong>Account Created:</strong> <?= htmlspecialchars($student['created_at']); ?></p>
-    </div>
-
-    <h2 style="padding-top: 20px;">Room Registration History</h2>  <table>
+    </div>  
+    
+    
+    
+    
+    <h2 style="padding-top: 20px; text-align: left;">Room Registration History</h2>
+    <table style="margin-left: auto; margin-right: auto;">
         <thead>
             <tr>
                 <th>Room Number</th>
