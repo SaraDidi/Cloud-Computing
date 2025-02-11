@@ -1,28 +1,89 @@
-
-
-<?php include '../includes/header.php'; ?>
-<h1>Welcome to University Housing</h1>
-<p>Manage your housing and complaints efficiently.</p>
-
-
 <?php
-$rooms = [
-    ['number' => '101', 'building' => 'A', 'image' => 'https://www.thespruce.com/thmb/2_Q52GK3rayV1wnqm6vyBvgI3Ew=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/put-together-a-perfect-guest-room-1976987-hero-223e3e8f697e4b13b62ad4fe898d492d.jpg'],
-    ['number' => '102', 'building' => 'A', 'image' => 'https://www.thespruce.com/thmb/2_Q52GK3rayV1wnqm6vyBvgI3Ew=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/put-together-a-perfect-guest-room-1976987-hero-223e3e8f697e4b13b62ad4fe898d492d.jpg'],
-    ['number' => '201', 'building' => 'B', 'image' => 'https://www.thespruce.com/thmb/2_Q52GK3rayV1wnqm6vyBvgI3Ew=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/put-together-a-perfect-guest-room-1976987-hero-223e3e8f697e4b13b62ad4fe898d492d.jpg'],
-    // Add more rooms as needed
-];
+// Include the database configuration
+require_once '../config/db.php'; 
 
-echo '<div style="display: flex; flex-wrap: wrap; gap: 10px;">';
-foreach ($rooms as $room) {
-    echo '<div class="room-card" style="border: 1px solid #ccc; padding: 10px; margin: 10px; width: calc(20% - 20px); text-align: center; border-radius: 10px; overflow: hidden; box-sizing: border-box;">';
-    echo '<img src="' . $room['image'] . '" alt="Room ' . $room['number'] . '" style="width: 100%; height: 150px; object-fit: cover;">';
-    echo '<p>Room Number: ' . $room['number'] . '</p>';
-    echo '<p>Building: ' . $room['building'] . '</p>';
-    echo '<button style="padding: 5px 10px; background-color: #2c3e50; color: white; border: none; cursor: pointer; border-radius: 5px;">Book Now</button>';
-    echo '</div>';
+// Ensure database connection exists
+if (!isset($db)) {
+    die('Database connection not found. Check db.php.');
 }
-echo '</div>';
+
+// Fetch rooms from the database
+$query = "SELECT id, room_number, floor_number, block_number, availability, 
+                 DATE_FORMAT(opening_time, '%Y-%m-%d %H:%i') AS opening_time, 
+                 DATE_FORMAT(closing_time, '%Y-%m-%d %H:%i') AS closing_time
+          FROM room ORDER BY floor_number, room_number";
+
+$stmt = $db->prepare($query);
+$stmt->execute();
+$rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<?php include('../includes/footer.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room List</title>
+    <style>
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .available {
+            color: green;
+            font-weight: bold;
+        }
+        .unavailable {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align: center;">Room Availability</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Room Number</th>
+                <th>Floor</th>
+                <th>Block</th>
+                <th>Availability</th>
+                <th>Opening Time</th>
+                <th>Closing Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (!empty($rooms)): ?>
+                <?php foreach ($rooms as $room): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($room['room_number']); ?></td>
+                        <td><?= htmlspecialchars($room['floor_number']); ?></td>
+                        <td><?= htmlspecialchars($room['block_number']); ?></td>
+                        <td class="<?= $room['availability'] ? 'available' : 'unavailable'; ?>">
+                            <?= $room['availability'] ? 'Available' : 'Occupied'; ?>
+                        </td>
+                        <td><?= htmlspecialchars($room['opening_time']); ?></td>
+                        <td><?= htmlspecialchars($room['closing_time']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6">No rooms found.</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+
+</body>
+</html>
