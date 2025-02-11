@@ -49,6 +49,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             color: red;
             font-weight: bold;
         }
+        img { width: 100px; height: 100px; border-radius: 5px; object-fit: cover; }
     </style>
 </head>
 <body>
@@ -60,6 +61,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Block</th>
             <th>Floor</th>
             <th>Room Number</th>
+            <th>Room Photo</th>
             <th>Availability</th>
             <th>Register</th>
         </tr>
@@ -71,6 +73,13 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($room['block_number']); ?></td>
                     <td><?= htmlspecialchars($room['floor_number']); ?></td>
                     <td><?= htmlspecialchars($room['room_number']); ?></td>
+                    <td>
+                            <?php if (!empty($room['room_photo'])): ?>
+                                <img src="<?= htmlspecialchars($room['room_photo']); ?>" alt="Room Photo">
+                            <?php else: ?>
+                                <span>No Image</span>
+                            <?php endif; ?>
+                        </td>
                     <td class="<?= $room['availability'] ? 'available' : 'unavailable'; ?>">
                         <?= $room['availability'] ? 'Available' : 'Occupied'; ?>
                     </td>
