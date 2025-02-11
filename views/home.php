@@ -85,7 +85,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </td>
                     <td>
                         <?php if ($room['availability']): ?>
-                            <form action="register.php" method="post">
+                            <form method="post">
                                 <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']); ?>">
                                 <button type="submit">Register</button>
                             </form>
