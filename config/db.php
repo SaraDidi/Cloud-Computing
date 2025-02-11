@@ -1,19 +1,22 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php'; // Adjust path as needed
+// Load Composer's autoload file (ensure the path is correct)
+require_once __DIR__ . '/../vendor/autoload.php';
 
+// Load environment variables from .env
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/..');
 $dotenv->load();
 
+// Retrieve database credentials from .env
 $host = getenv('DB_HOST');
 $dbname = getenv('DB_NAME');
 $user = getenv('DB_USER');
 $pass = getenv('DB_PASS');
 
-$conn = new mysqli($host, $user, $pass, $dbname);
-
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
+// Connect to MySQL using PDO
+try {
+    $db = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
-
-echo "Connected to the database successfully!";
 ?>
