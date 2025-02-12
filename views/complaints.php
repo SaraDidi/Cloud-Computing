@@ -6,7 +6,7 @@ session_start();
 
 // Ensure student is logged in
 if (!isset($_SESSION['student_id'])) {
-    die("You must be logged in to view complaints.");
+    die("Vous devez être connecté pour voir les réclamations.");
 }
 
 $student_id = $_SESSION['student_id'];
@@ -66,25 +66,25 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div id="complaintModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Submit a Complaint</h2>
+        <h2>Déposer une plainte</h2>
         <form id="complaintForm">
-            <label for="title">Title:</label>
+            <label for="title">Titre:</label>
             <input type="text" name="title" id="title" placeholder="Enter a short title" required>
 
-            <label for="complaint_type">Complaint Type:</label>
+            <label for="complaint_type">Type de plainte:</label>
             <select name="complaint_type" id="complaint_type" required>
-                <option value="" disabled selected>Select Complaint Type</option>
-                <option value="Maintenance">Maintenance</option>
-                <option value="Noise">Noise</option>
-                <option value="Cleanliness">Cleanliness</option>
-                <option value="Roommate Issues">Roommate Issues</option>
-                <option value="Other">Other</option>
+                <option value="" disabled selected>Sélectionnez la plainte</option>
+                <option value="Maintenance">Entretien</option>
+                <option value="Noise">Bruit</option>
+                <option value="Cleanliness">Propreté</option>
+                <option value="Roommate Issues">Problèmes de colocataire</option>
+                <option value="Other">Autre</option>
             </select>
 
-            <label for="body">Details:</label>
-            <textarea name="body" id="body" rows="4" placeholder="Describe your complaint in detail..." required></textarea>
+            <label for="body">Détails:</label>
+            <textarea name="body" id="body" rows="4" placeholder="Décrivez votre plainte en détail..." required></textarea>
             <div class="modal-footer" style="text-align: center;">
-                <button type="button" class="submit-btn" style="font-size: 1.2em; padding: 10px 20px;" onclick="submitComplaint()">Submit</button>
+                <button type="button" class="submit-btn" style="font-size: 1.2em; padding: 10px 20px;" onclick="submitComplaint()">Envoyer</button>
             </div>
         </form>
     </div>
@@ -94,11 +94,11 @@ $complaints = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <table>
         <thead>
             <tr>
-                <th>Complaint Date</th>
-                <th>Title</th>
+                <th>Date de plainte</th>
+                <th>Titre</th>
                 <th>Type</th>
-                <th>Status</th>
-                <th>Details</th>
+                <th>Statut</th>
+                <th>Détails</th>
             </tr>
         </thead>
         <tbody>

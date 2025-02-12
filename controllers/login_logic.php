@@ -13,12 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Check if both fields are filled
     if (empty($matricul) || empty($password)) {
-        die('Matricul and password are required.');
+        die('Une matricule et un mot de passe sont requis.');
     }
 
     // Ensure $db (Database Connection) is correctly loaded
     if (!isset($db)) {
-        die('Database connection not found. Check db.php.');
+        die('Connexion à la base de données introuvable. Vérifiez db.php');
     }
 
     // Prepare the SQL statement
@@ -36,13 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['student_id'] = $user['id'];
         $_SESSION['student_name'] = $user['name']; // Optional: Store name for display
 
-        echo "Login successful!";
+        echo "Connexion réussie !";
         
         // Redirect to home or dashboard
         header("Location: ../views/home.php");
         exit;
     } else {
-        echo "Invalid matricul or password.";
+        echo "Matricule ou mot de passe invalide.";
     }
 } else {
     // Redirect if accessed directly

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $db->prepare("INSERT INTO rooms (student_id, housing_id) VALUES (?, ?)");
     $stmt->execute([$student_id, $housing_id]);
 
-    $message = "You have successfully registered for housing!";
+    $message = "Vous avez réussi votre inscription au logement !";
 }
 ?>
 
@@ -30,16 +30,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Housing Registration</title>
+    <title>Enregistrement du logement</title>
 </head>
 <body>
-    <h1>Welcome, <?php echo $_SESSION['student_name']; ?></h1>
-    <h2>Available Housing Registrations</h2>
+    <h1>Bienvenu, <?php echo $_SESSION['student_name']; ?></h1>
+    <h2>Inscriptions de logements disponibles</h2>
     <?php if (isset($message)) echo "<p style='color:green;'>$message</p>"; ?>
 
     <?php if (!empty($open_housings)): ?>
         <form method="POST" action="">
-            <label for="housing_id">Choose Housing:</label>
+            <label for="housing_id">Choisissez un logement :</label>
             <select id="housing_id" name="housing_id">
                 <?php foreach ($open_housings as $housing): ?>
                     <option value="<?php echo $housing['id']; ?>">
@@ -47,10 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </option>
                 <?php endforeach; ?>
             </select>
-            <button type="submit">Register</button>
+            <button type="submit">Inscription</button>
         </form>
     <?php else: ?>
-        <p>No housing registrations are currently open.</p>
+        <p>Aucune inscription n'est actuellement ouverte pour un logement.</p>
     <?php endif; ?>
 </body>
 </html>

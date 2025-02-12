@@ -18,12 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Check for required fields
     if (empty($name) || empty($matricul) || empty($password) || empty($confirm_password)) {
-        die('All fields marked with * are required.');
+        die("Tous les champs marqués d'un * sont obligatoires.");
     }
 
     // Check password confirmation
     if ($password !== $confirm_password) {
-        die('Passwords do not match.');
+        die('Les mots de passe ne correspondent pas.');
     }
 
     // Hash the password for security
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
-        die('The matricul is already registered.');
+        die('Le matricule est déjà enregistré.');
     }
 
     // Insert the user into the database
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ../index.php?registration=success");
         exit;
     } else {
-        die('Registration failed. Please try again.');
+        die("L'inscription a échoué. Veuillez réessayer.");
     }
 } else {
     // Redirect to the registration page if accessed directly

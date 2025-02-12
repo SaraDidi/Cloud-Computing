@@ -7,7 +7,7 @@ require_once '../config/db.php';
 
 // Ensure the student is logged in
 if (!isset($_SESSION['student_id'])) {
-    die(json_encode(["status" => "error", "message" => "You must be logged in to submit a complaint."]));
+    die(json_encode(["status" => "error", "message" => "Vous devez être connecté pour déposer une plainte."]));
 }
 
 $student_id = $_SESSION['student_id'];
@@ -34,9 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bindParam(':body', $body);
 
     if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Complaint submitted successfully."]);
+        echo json_encode(["status" => "success", "message" => "Réclamation soumise avec succès."]);
     } else {
-        echo json_encode(["status" => "error", "message" => "Failed to submit complaint."]);
+        echo json_encode(["status" => "error", "message" => "Échec de la soumission de la réclamation."]);
     }
 }
 ?>

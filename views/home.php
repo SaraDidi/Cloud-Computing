@@ -9,7 +9,7 @@ require_once '../config/db.php';
 
 // Ensure database connection exists
 if (!isset($db)) {
-    die('Database connection not found. Check db.php.');
+    die('Connexion à la base de données non trouvée. Vérifiez db.php.');
 }
 
 // Fetch rooms from the database
@@ -26,7 +26,7 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room List</title>
+    <title>Liste des chambres</title>
     <style>
         table {
             width: 80%;
@@ -53,17 +53,17 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-<h2 style="text-align: left; margin-left: 10%; padding-top: 20px;">Room Availability</h2>
+<h2 style="text-align: left; margin-left: 10%; padding-top: 20px;">Disponibilité des chambres</h2>
 
 <table>
     <thead>
         <tr> 
-            <th>Block</th>
-            <th>Floor</th>
-            <th>Room Number</th>
-            <th>Room Photo</th>
-            <th>Availability</th>
-            <th>Register</th>
+            <th>Bloc</th>
+            <th>Étage</th>
+            <th>Numéro de chambre</th>
+            <th>Photo de la chambre</th>
+            <th>Disponibilité</th>
+            <th>Inscription</th>
         </tr>
     </thead>
     <tbody>
@@ -75,29 +75,29 @@ $rooms = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($room['room_number']); ?></td>
                     <td>
                             <?php if (!empty($room['room_photo'])): ?>
-                                <img src="<?= htmlspecialchars($room['room_photo']); ?>" alt="Room Photo">
+                                <img src="<?= htmlspecialchars($room['room_photo']); ?>" alt="Photo de la chambre">
                             <?php else: ?>
-                                <span>No Image</span>
+                                <span>Aucune image</span>
                             <?php endif; ?>
                         </td>
                     <td class="<?= $room['availability'] ? 'available' : 'unavailable'; ?>">
-                        <?= $room['availability'] ? 'Available' : 'Occupied'; ?>
+                        <?= $room['availability'] ? 'Disponible' : 'Occupé'; ?>
                     </td>
                     <td>
                         <?php if ($room['availability']): ?>
                             <form method="post">
                                 <input type="hidden" name="room_id" value="<?= htmlspecialchars($room['id']); ?>">
-                                <button type="submit">Register</button>
+                                <button type="submit">S'inscrire</button>
                             </form>
                         <?php else: ?>
-                            <span>Can't be registered</span>
+                            <span>Impossible de s'inscrire</span>
                         <?php endif; ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
         <?php else: ?>
             <tr>
-                <td colspan="6">No rooms found.</td>
+                <td colspan="6">Aucune chambre trouvée.</td>
             </tr>
         <?php endif; ?>
     </tbody>

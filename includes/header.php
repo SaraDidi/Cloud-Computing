@@ -8,7 +8,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Header</title>
+    <title>En-tête du projet</title>
     <style>
         body {
             margin: 0;
@@ -53,17 +53,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
 </head>
 <body>
     <div class="sidebar">
-        <a href="../views/home.php" class="<?= $current_page == 'home.php' ? 'active' : '' ?>">Home</a>
-        <a href="../views/complaints.php" class="<?= $current_page == 'complaints.php' ? 'active' : '' ?>">Complaints</a>
-        <a href="../views/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">Profile</a>
+        <a href="../views/home.php" class="<?= $current_page == 'home.php' ? 'active' : '' ?>">Accueil</a>
+        <a href="../views/complaints.php" class="<?= $current_page == 'complaints.php' ? 'active' : '' ?>">Plaintes</a>
+        <a href="../views/profile.php" class="<?= $current_page == 'profile.php' ? 'active' : '' ?>">Profil</a>
     <script>
         function confirmLogout(event) {
             event.preventDefault();
-            if (confirm("Are you sure you want to log out?")) {
+            if (confirm("Êtes-vous sûr de vouloir vous déconnecter ?")) {
                 window.location.href = "../views/logout.php";
             }
         }
     </script>
-    <a href="#" onclick="confirmLogout(event)">Logout</a>
+    <a href="#" onclick="confirmLogout(event)">Déconnexion</a>
     </div>
     <div class="main-content">
